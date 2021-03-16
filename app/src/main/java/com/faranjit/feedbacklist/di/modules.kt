@@ -1,8 +1,19 @@
 package com.faranjit.feedbacklist.di
 
 import android.content.Context
+import com.faranjit.feedbacklist.network.FeedbackApi
 import com.faranjit.feedbacklist.network.MockServer
-import com.faranjit.feedbacklist.ui.home.data.HomeApi
+import com.faranjit.feedbacklist.ui.detail.data.DetailDataRepository
+import com.faranjit.feedbacklist.ui.detail.data.datasource.DetailRemoteDataSource
+import com.faranjit.feedbacklist.ui.detail.domain.DetailRepository
+import com.faranjit.feedbacklist.ui.detail.domain.interactor.GetDetails
+import com.faranjit.feedbacklist.ui.detail.presentation.DetailViewModel
+import com.faranjit.feedbacklist.ui.filter.data.FilterDataRepository
+import com.faranjit.feedbacklist.ui.filter.data.datasource.FilterRemoteDataSource
+import com.faranjit.feedbacklist.ui.filter.domain.FilterRepository
+import com.faranjit.feedbacklist.ui.filter.domain.interactor.GetFilterData
+import com.faranjit.feedbacklist.ui.filter.domain.interactor.GetFilteredFeedbacks
+import com.faranjit.feedbacklist.ui.filter.presentation.FilterViewModel
 import com.faranjit.feedbacklist.ui.home.data.HomeDataRepository
 import com.faranjit.feedbacklist.ui.home.data.datasource.HomeRemoteDataSource
 import com.faranjit.feedbacklist.ui.home.domain.HomeRepository
@@ -30,17 +41,33 @@ val appModule = module {
     single { MockServer.createMockServer(get()) }
     single { createOkHttp(get()) }
     single { createRetrofit(get()) }
-
-    factory { HomeRemoteDataSource(createHomeApi(get())) }
-    factory<HomeRepository> { HomeDataRepository(get()) }
+    single { createFeedbackApi(get()) }
 }
 
 val homeModule = module {
+    factory { HomeRemoteDataSource(get()) }
+    factory<HomeRepository> { HomeDataRepository(get()) }
     factory { GetFeedbacks(get()) }
+
     viewModel { HomeViewModel(get()) }
 }
 
-private fun createHomeApi(retrofit: Retrofit) = retrofit.create(HomeApi::class.java)
+val filterModule = module {
+    factory { FilterRemoteDataSource(get()) }
+    factory<FilterRepository> { FilterDataRepository(get()) }
+    factory { GetFilterData(get()) }
+    factory { GetFilteredFeedbacks(get()) }
+    viewModel { FilterViewModel(get(), get()) }
+}
+
+val detailModule = module {
+    factory { DetailRemoteDataSource(get()) }
+    factory<DetailRepository> { DetailDataRepository(get()) }
+    factory { GetDetails(get()) }
+    viewModel { DetailViewModel(get()) }
+}
+
+private fun createFeedbackApi(retrofit: Retrofit) = retrofit.create(FeedbackApi::class.java)
 
 private fun createOkHttp(mockServerInterceptor: Interceptor) = OkHttpClient.Builder()
     .connectTimeout(120, TimeUnit.SECONDS)

@@ -9,8 +9,9 @@ import com.faranjit.feedbacklist.ui.home.domain.Feedback
  * Created by Bulent Turkmen on 16.03.2021.
  */
 class FeedbackListAdapter(
-    val feedbackList: List<Feedback>
-) : BaseAdapter<Feedback, ListItemFeedbackBinding>(R.layout.list_item_feedback, feedbackList) {
+    val clickListener: (Feedback) -> Unit
+) :
+    BaseAdapter<ListItemFeedbackBinding>(R.layout.list_item_feedback, clickListener) {
 
     override fun bindItem(binding: ListItemFeedbackBinding?, item: Feedback) {
         binding?.feedback = item

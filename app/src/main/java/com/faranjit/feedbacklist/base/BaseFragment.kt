@@ -27,22 +27,15 @@ abstract class BaseFragment<VM : BaseViewModel, DB : ViewDataBinding>(
         super.onViewCreated(view, savedInstanceState)
 
         viewModel = provideViewModel()
-        viewModel?.loadingLiveData?.observe(viewLifecycleOwner, {
-            if (it) {
-                showLoading()
-            } else {
-                hideLoading()
-            }
-        })
     }
 
     abstract fun provideViewModel(): VM
 
     private fun showLoading() {
-        progressDialog?.show()
+        (activity as? BaseActivity<*>)?.showLoading()
     }
 
     private fun hideLoading() {
-        progressDialog?.dismiss()
+        (activity as? BaseActivity<*>)?.hideLoading()
     }
 }

@@ -8,22 +8,21 @@ import com.faranjit.feedbacklist.ui.home.domain.interactor.GetFeedbacks
 
 class HomeViewModel(private val getFeedbacks: GetFeedbacks) : BaseViewModel() {
 
-    companion object {
-        private const val LIMIT = 20
-    }
-
     private val feedbacks = MutableLiveData<List<Feedback>>()
     val feedbackLiveData: LiveData<List<Feedback>>
         get() = feedbacks
 
-    private var currentPage = 0
-
     init {
-        fetchNexFeedbacks()
+        getFeedbacks()
     }
 
-    fun fetchNexFeedbacks() =
+    fun getFeedbacks() =
         launchDataLoad(feedbacks) {
-            getFeedbacks.execute().subList(currentPage * LIMIT, (++currentPage) * LIMIT)
+            getFeedbacks.execute()
+        }
+
+    fun getStarredFeedbacks() =
+        launchDataLoad(feedbacks) {
+            getFeedbacks.execute().filter { it.starred }
         }
 }

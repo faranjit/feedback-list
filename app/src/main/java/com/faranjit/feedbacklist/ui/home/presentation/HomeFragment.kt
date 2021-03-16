@@ -27,12 +27,12 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(R.layout.f
         initScrollListener()
 
         homeViewModel.feedbackLiveData.observe(viewLifecycleOwner, {
-            if (feedbackAdapter == null) {
-                feedbackAdapter = FeedbackListAdapter((it))
-                binding.recyclerFeedbacks.adapter = feedbackAdapter
-            } else {
-                feedbackAdapter?.addItems(it)
-            }
+//            if (feedbackAdapter == null) {
+//                feedbackAdapter = FeedbackListAdapter((it))
+//                binding.recyclerFeedbacks.adapter = feedbackAdapter
+//            } else {
+//                feedbackAdapter?.addItems(it)
+//            }
 
             scrollListener.setLoaded()
         })
@@ -50,7 +50,7 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(R.layout.f
         layoutManager?.let {
             scrollListener = RecyclerScrollListener(it).apply {
                 setOnLoadMoreListener {
-                    homeViewModel.fetchNexFeedbacks()
+                    homeViewModel.getFeedbacks()
                 }
             }
 

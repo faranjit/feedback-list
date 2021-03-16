@@ -1,6 +1,8 @@
 package com.faranjit.feedbacklist.ui.home.domain
 
+import android.os.Parcelable
 import com.faranjit.feedbacklist.util.DateSerializer
+import kotlinx.parcelize.Parcelize
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import java.util.*
@@ -14,6 +16,7 @@ data class FeedbackResponse(
     val feedbacks: List<Feedback>
 )
 
+@Parcelize
 @Serializable
 data class Feedback(
     @SerialName("id")
@@ -32,9 +35,14 @@ data class Feedback(
     val html: String? = null,
     @SerialName("creation_date")
     @Serializable(with = DateSerializer::class)
-    val created: Date? = null
-)
+    val created: Date? = null,
+    @SerialName("starred")
+    val starred: Boolean = false,
+    @SerialName("rating")
+    val rating: Double
+) : Parcelable
 
+@Parcelize
 @Serializable
 data class Browser(
     @SerialName("onLine")
@@ -47,12 +55,15 @@ data class Browser(
     val userAgent: String? = null,
     @SerialName("platform")
     val platform: String? = null,
+    @SerialName("appVersion")
+    val appVersion: String? = null,
     @SerialName("productSub")
     val productSub: String? = null,
     @SerialName("language")
     val language: String? = null
-)
+) : Parcelable
 
+@Parcelize
 @Serializable
 data class Image(
     @SerialName("uri")
@@ -63,8 +74,9 @@ data class Image(
     val height: Int? = null,
     @SerialName("url")
     val url: String
-)
+) : Parcelable
 
+@Parcelize
 @Serializable
 data class Images(
     @SerialName("screenshot")
@@ -79,8 +91,9 @@ data class Images(
     val list: Image? = null,
     @SerialName("detail")
     val detail: Image? = null
-)
+) : Parcelable
 
+@Parcelize
 @Serializable
 data class Location(
     @SerialName("country")
@@ -90,7 +103,7 @@ data class Location(
     @SerialName("city")
     val city: String? = null,
     @SerialName("lat")
-    val lat: Double? = null,
+    val lat: Double,
     @SerialName("lon")
-    val lon: Double? = null
-)
+    val lon: Double
+) : Parcelable

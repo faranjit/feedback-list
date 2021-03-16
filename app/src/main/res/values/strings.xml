@@ -1,6 +1,22 @@
 <resources>
     <string name="app_name">FeedbackList</string>
-    <string name="title_home">All</string>
-    <string name="title_map">Map</string>
+    <string name="title_home">Feedbacks</string>
+    <string name="title_all">All</string>
+    <string name="title_filter">Filter</string>
     <string name="title_starred">Starred</string>
+    <string name="title_detail">Details</string>
+
+    <string name="rating">Rating</string>
+    <string name="label">Label</string>
+    <string name="country">Country</string>
+    <string name="city">City</string>
+    <string name="search">Search</string>
+    <string name="browser_info">Browser Info</string>
+    <string name="browser_app_name">App Name:</string>
+    <string name="platform">Platform: </string>
+    <string name="app_version">App Version</string>
+    <string name="labels">Labels: </string>
+    <string name="rating_label">Rating:</string>
+    <string name="display_as_html">Display as Html</string>
+    <string name="comment">Comment</string>
 </resources>
