@@ -2,28 +2,27 @@ package com.faranjit.feedbacklist.network
 
 import android.content.Context
 import com.faranjit.feedbacklist.BuildConfig
-import okhttp3.*
+import okhttp3.Interceptor
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.Protocol
+import okhttp3.Response
+import okhttp3.ResponseBody.Companion.toResponseBody
 
 /**
  * Created by Bulent Turkmen on 16.03.2021.
  */
 object MockServer {
 
-    fun createMockServer(context: Context) = object : Interceptor {
+    fun createMockServer(dummyResponse: String) = object : Interceptor {
         override fun intercept(chain: Interceptor.Chain): Response {
             if (BuildConfig.DEBUG) {
-                val responseString = readDummyJson(context)
-
                 return chain.proceed(chain.request())
                     .newBuilder()
                     .code(200)
                     .protocol(Protocol.HTTP_2)
-                    .message(responseString)
                     .body(
-                        ResponseBody.create(
-                            MediaType.parse("application/json"),
-                            responseString.toByteArray()
-                        )
+                        dummyResponse.toByteArray()
+                            .toResponseBody("application/json".toMediaType())
                     )
                     .addHeader("content-type", "application/json")
                     .build()

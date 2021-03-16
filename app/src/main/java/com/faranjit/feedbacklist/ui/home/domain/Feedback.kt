@@ -1,7 +1,9 @@
 package com.faranjit.feedbacklist.ui.home.domain
 
+import com.faranjit.feedbacklist.util.DateSerializer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import java.util.*
 
 /**
  * Created by Bulent Turkmen on 16.03.2021.
@@ -27,7 +29,10 @@ data class Feedback(
     @SerialName("comment")
     val comment: String,
     @SerialName("html_snippet")
-    val html: String? = null
+    val html: String? = null,
+    @SerialName("creation_date")
+    @Serializable(with = DateSerializer::class)
+    val created: Date? = null
 )
 
 @Serializable

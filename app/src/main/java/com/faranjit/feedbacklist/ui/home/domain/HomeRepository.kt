@@ -8,5 +8,5 @@ interface HomeRepository {
     /**
      * Get feedbacks from the source
      */
-    suspend fun getFeedbacks(): FeedbackResponse
+    suspend fun getFeedbacks(): List<Feedback>
 }

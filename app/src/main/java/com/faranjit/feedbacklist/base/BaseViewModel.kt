@@ -22,6 +22,7 @@ abstract class BaseViewModel : ViewModel() {
         get() = loading
 
     fun <T> launchDataLoad(resultLiveData: MutableLiveData<T>, block: suspend () -> T): Job {
+        loading.value = true
         return viewModelScope.launch {
             try {
                 resultLiveData.value = block()
