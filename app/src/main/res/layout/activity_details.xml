@@ -244,7 +244,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="@{viewModel.feedback.comment}"
+                    android:text="@{viewModel.feedbackObservable.comment}"
                     android:textColor="@android:color/background_dark"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -263,7 +263,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/txt_comment"
-                    app:visibility="@{viewModel.feedback.html}" />
+                    app:visibility="@{viewModel.feedbackObservable.html}" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

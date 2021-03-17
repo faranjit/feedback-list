@@ -55,7 +55,10 @@ class DetailActivity : BaseActivity<DetailViewModel>() {
         params.behavior = behavior
 
         val feedback = intent.getParcelableExtra<Feedback>(KEY_FEEDBACK)
-        detailViewModel.feedback = feedback
+        // you can pass just id of the feedback and fetch details from api
+        // or you can pass whole object and not send request to api
+//        detailViewModel.feedback = feedback
+        detailViewModel.getDetails(feedback?.id)
 
         binding.btnHtml.setOnClickListener {
             HtmlSnippetDialogFragment.newInstance(feedback?.html)
