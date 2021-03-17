@@ -18,6 +18,7 @@ import com.faranjit.feedbacklist.ui.home.data.HomeDataRepository
 import com.faranjit.feedbacklist.ui.home.data.datasource.HomeRemoteDataSource
 import com.faranjit.feedbacklist.ui.home.domain.HomeRepository
 import com.faranjit.feedbacklist.ui.home.domain.interactor.GetFeedbacks
+import com.faranjit.feedbacklist.ui.home.domain.interactor.GetStarredFeedbacks
 import com.faranjit.feedbacklist.ui.home.presentation.HomeViewModel
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.ExperimentalSerializationApi
@@ -40,7 +41,8 @@ val appModule = module {
     single { readDummyJson(androidContext()) }
     single { MockServer.createMockServer(get()) }
     single { createOkHttp(get()) }
-    single { createRetrofit(get()) }
+    single { createJson() }
+    single { createRetrofit(get(), get()) }
     single { createFeedbackApi(get()) }
 }
 
@@ -48,8 +50,9 @@ val homeModule = module {
     factory { HomeRemoteDataSource(get()) }
     factory<HomeRepository> { HomeDataRepository(get()) }
     factory { GetFeedbacks(get()) }
+    factory { GetStarredFeedbacks(get()) }
 
-    viewModel { HomeViewModel(get()) }
+    viewModel { HomeViewModel(getFeedbacks = get(), getStarredFeedbacks = get()) }
 }
 
 val filterModule = module {
@@ -57,7 +60,7 @@ val filterModule = module {
     factory<FilterRepository> { FilterDataRepository(get()) }
     factory { GetFilterData(get()) }
     factory { GetFilteredFeedbacks(get()) }
-    viewModel { FilterViewModel(get(), get()) }
+    viewModel { FilterViewModel(getFilterData = get(), filter = get()) }
 }
 
 val detailModule = module {
@@ -79,13 +82,15 @@ private fun createOkHttp(mockServerInterceptor: Interceptor) = OkHttpClient.Buil
     .build()
 
 @ExperimentalSerializationApi
-private fun createRetrofit(okHttpClient: OkHttpClient) = Retrofit.Builder()
+private fun createRetrofit(okHttpClient: OkHttpClient, json: Json) = Retrofit.Builder()
     .baseUrl("https://www.google.com")
     .client(okHttpClient)
-    .addConverterFactory(Json {
-        ignoreUnknownKeys = true
-    }.asConverterFactory("application/json".toMediaType()))
+    .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
     .build()
+
+private fun createJson() = Json {
+    ignoreUnknownKeys = true
+}
 
 private fun readDummyJson(context: Context) =
     context.assets.open("apidemo.json").bufferedReader().use { it.readText() }

@@ -5,7 +5,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 /**
@@ -13,24 +12,24 @@ import kotlinx.coroutines.launch
  */
 abstract class BaseViewModel : ViewModel() {
 
-    private val loading = MutableLiveData<Boolean>(false)
-
-    /**
-     * Show a loading spinner if true
-     */
+    private val loading = MutableLiveData(false)
     val loadingLiveData: LiveData<Boolean>
         get() = loading
 
-    fun <T> launchDataLoad(resultLiveData: MutableLiveData<T>, block: suspend () -> T): Job {
+    fun <T> launchDataLoad(block: suspend () -> T?): T? {
         loading.value = true
-        return viewModelScope.launch {
+
+        var res: T? = null
+        viewModelScope.launch {
             try {
-                resultLiveData.value = block()
+                res = block()
             } catch (error: Throwable) {
                 Log.e(javaClass.canonicalName, error.message, error)
             } finally {
                 loading.value = false
             }
         }
+
+        return res
     }
 }

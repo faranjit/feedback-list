@@ -5,8 +5,12 @@ import androidx.lifecycle.MutableLiveData
 import com.faranjit.feedbacklist.base.BaseViewModel
 import com.faranjit.feedbacklist.ui.home.domain.Feedback
 import com.faranjit.feedbacklist.ui.home.domain.interactor.GetFeedbacks
+import com.faranjit.feedbacklist.ui.home.domain.interactor.GetStarredFeedbacks
 
-class HomeViewModel(private val getFeedbacks: GetFeedbacks) : BaseViewModel() {
+class HomeViewModel(
+    private val getFeedbacks: GetFeedbacks,
+    private val getStarredFeedbacks: GetStarredFeedbacks
+) : BaseViewModel() {
 
     private val feedbacks = MutableLiveData<List<Feedback>>()
     val feedbackLiveData: LiveData<List<Feedback>>
@@ -16,13 +20,11 @@ class HomeViewModel(private val getFeedbacks: GetFeedbacks) : BaseViewModel() {
         getFeedbacks()
     }
 
-    fun getFeedbacks() =
-        launchDataLoad(feedbacks) {
-            getFeedbacks.execute()
-        }
+    fun getFeedbacks() = launchDataLoad {
+        feedbacks.value = getFeedbacks.execute()
+    }
 
-    fun getStarredFeedbacks() =
-        launchDataLoad(feedbacks) {
-            getFeedbacks.execute().filter { it.starred }
-        }
+    fun getStarredFeedbacks() = launchDataLoad {
+        feedbacks.value = getStarredFeedbacks.execute()
+    }
 }

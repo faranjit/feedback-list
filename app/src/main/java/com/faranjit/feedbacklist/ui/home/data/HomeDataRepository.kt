@@ -9,4 +9,6 @@ import com.faranjit.feedbacklist.ui.home.domain.HomeRepository
 class HomeDataRepository(private val remoteDataSource: HomeRemoteDataSource) : HomeRepository {
 
     override suspend fun getFeedbacks() = remoteDataSource.getFeedbacks()
+
+    override suspend fun getStarredFeedbacks() = remoteDataSource.getStarredFeedbacks()
 }
