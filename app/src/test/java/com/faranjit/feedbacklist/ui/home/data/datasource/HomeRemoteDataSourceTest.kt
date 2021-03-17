@@ -9,12 +9,11 @@ import kotlinx.coroutines.launch
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.decodeFromString
 import org.junit.Assert
+import org.junit.Before
 import org.junit.Test
 import org.mockito.InjectMocks
 import org.mockito.Mock
-import org.mockito.Mockito
-import org.mockito.Mockito.`when`
-import org.mockito.Mockito.times
+import org.mockito.Mockito.*
 
 /**
  * Created by Bulent Turkmen on 17.03.2021.
@@ -29,20 +28,40 @@ class HomeRemoteDataSourceTest : BaseUnitTest() {
     @InjectMocks
     private lateinit var remoteDataSource: HomeRemoteDataSource
 
+    private lateinit var dummyResponse: FeedbackResponse
+
+    @Before
+    fun setup() {
+        dummyResponse = json.decodeFromString(DummyResponse.getFeedbacks())
+    }
+
     @Test
     fun `getFeedbacks should return all feedbacks`() {
         testScope.launch {
             // Given
-            val dummyResponse =
-                json.decodeFromString<FeedbackResponse>(DummyResponse.getFeedbacks())
-            `when`(feedbackApi.getFeedbacks(null, null, null, null)).thenReturn(dummyResponse)
 
             // when
+            `when`(feedbackApi.getFeedbacks(null, null, null, null)).thenReturn(dummyResponse)
             val response = remoteDataSource.getFeedbacks()
 
             // Then
             Assert.assertEquals(dummyResponse.feedbacks.size, response.size)
-            Mockito.verify(feedbackApi, times(1)).getFeedbacks(null, null, null, null)
+            verify(feedbackApi, times(1)).getFeedbacks(null, null, null, null)
+        }
+    }
+
+    @Test
+    fun `getStarredFeedbacks should return just starred feedbacks`() {
+        testScope.launch {
+            // Given
+
+            // when
+            `when`(feedbackApi.getFeedbacks(null, null, null, null)).thenReturn(dummyResponse)
+            val response = remoteDataSource.getStarredFeedbacks()
+
+            // Then
+            Assert.assertTrue(response.all { it.starred })
+            verify(feedbackApi, times(1)).getFeedbacks(null, null, null, null)
         }
     }
 }
