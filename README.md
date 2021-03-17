@@ -11,7 +11,8 @@ I used a dummy response to simulate service calls instead of getting from servic
 I created an interceptor. This interceptor returns the content of **apidemo.json** as json for each request.
 When creating the application, that file is read in app module and sent to **MockServer** just once since it is provided by **single**.
 
-The hard part of the coroutines is testing. In this project you can find simple test cases that shows how to test viewModel or another suspend functions.
+There are some simple tests for only Home feature to demonstrate how to write simple test cases using Mockito, Coroutines test for different layers and suspend functions.
+Also you can find viewModel and liveData test in this project.
 
 ## Libraries and tools used
 
