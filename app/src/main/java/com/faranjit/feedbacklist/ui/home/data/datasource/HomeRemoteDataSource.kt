@@ -3,7 +3,6 @@ package com.faranjit.feedbacklist.ui.home.data.datasource
 import com.faranjit.feedbacklist.network.FeedbackApi
 import com.faranjit.feedbacklist.ui.home.domain.Feedback
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 
 /**
@@ -15,7 +14,6 @@ class HomeRemoteDataSource(private val feedbackApi: FeedbackApi) {
      * Get feedbacks from the source
      */
     suspend fun getFeedbacks(): List<Feedback> = withContext(Dispatchers.IO) {
-        delay(1500)
         feedbackApi.getFeedbacks().feedbacks.sortedByDescending { it.rating }
     }
 }
