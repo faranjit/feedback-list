@@ -61,15 +61,50 @@
                 android:padding="@dimen/activity_horizontal_margin">
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/lbl_browser_info"
+                    android:id="@+id/lbl_location"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/browser_info"
+                    android:text="@string/location"
                     android:textColor="@android:color/background_dark"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/lbl_country"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/label_country"
+                    android:textColor="@android:color/background_dark"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/lbl_location" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/activity_horizontal_margin"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                    android:text="@{viewModel.feedbackObservable.location.toString()}"
+                    android:textColor="@android:color/background_dark"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toEndOf="@id/lbl_country"
+                    app:layout_constraintTop_toBottomOf="@id/lbl_location"
+                    tools:text="asf" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/lbl_browser_info"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/browser_info"
+                    android:layout_marginTop="@dimen/activity_vertical_margin"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/lbl_country" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/lbl_browser_name"

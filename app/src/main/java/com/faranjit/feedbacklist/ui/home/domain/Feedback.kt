@@ -106,4 +106,7 @@ data class Location(
     val lat: Double,
     @SerialName("lon")
     val lon: Double
-) : Parcelable
+) : Parcelable {
+
+    override fun toString() = "$city/$country - $lat, $lon"
+}

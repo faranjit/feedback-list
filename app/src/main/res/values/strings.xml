@@ -19,4 +19,7 @@
     <string name="rating_label">Rating:</string>
     <string name="display_as_html">Display as Html</string>
     <string name="comment">Comment</string>
+    <string name="location">Location</string>
+    <string name="label_country">City/Country: </string>
+    <string name="label_coordinates">Coordinates: </string>
 </resources>
