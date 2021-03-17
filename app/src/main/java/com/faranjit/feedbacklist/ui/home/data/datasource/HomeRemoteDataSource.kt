@@ -16,4 +16,13 @@ class HomeRemoteDataSource(private val feedbackApi: FeedbackApi) {
     suspend fun getFeedbacks(): List<Feedback> = withContext(Dispatchers.IO) {
         feedbackApi.getFeedbacks().feedbacks.sortedByDescending { it.rating }
     }
+
+    /**
+     * Get starred feedbacks from the source
+     */
+    suspend fun getStarredFeedbacks(): List<Feedback> = withContext(Dispatchers.IO) {
+        feedbackApi.getFeedbacks().feedbacks
+            .filter { it.starred }
+            .sortedByDescending { it.rating }
+    }
 }

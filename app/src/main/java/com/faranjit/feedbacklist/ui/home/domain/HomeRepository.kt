@@ -9,4 +9,9 @@ interface HomeRepository {
      * Get feedbacks from the source
      */
     suspend fun getFeedbacks(): List<Feedback>
+
+    /**
+     * Get starred feedbacks from the source
+     */
+    suspend fun getStarredFeedbacks(): List<Feedback>
 }

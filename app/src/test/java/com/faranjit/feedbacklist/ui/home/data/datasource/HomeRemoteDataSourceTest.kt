@@ -9,14 +9,12 @@ import kotlinx.coroutines.launch
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.decodeFromString
 import org.junit.Assert
-import org.junit.Before
 import org.junit.Test
-import org.mockito.BDDMockito.times
 import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.Mockito.`when`
-import org.mockito.MockitoAnnotations
+import org.mockito.Mockito.times
 
 /**
  * Created by Bulent Turkmen on 17.03.2021.
@@ -30,11 +28,6 @@ class HomeRemoteDataSourceTest : BaseUnitTest() {
 
     @InjectMocks
     private lateinit var remoteDataSource: HomeRemoteDataSource
-
-    @Before
-    fun setup() {
-        MockitoAnnotations.openMocks(this)
-    }
 
     @Test
     fun `getFeedbacks should return all feedbacks`() {

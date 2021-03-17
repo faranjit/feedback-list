@@ -980,7 +980,7 @@ object DummyResponse {
         "height": 647
       },
       "id": "52ef59e2b6679cd03ec364f0",
-      "starred": false
+      "starred": true
     }
   ],
   "count": 4347,

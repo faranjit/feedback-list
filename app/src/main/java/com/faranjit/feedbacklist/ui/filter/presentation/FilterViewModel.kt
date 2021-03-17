@@ -2,14 +2,12 @@ package com.faranjit.feedbacklist.ui.filter.presentation
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
 import com.faranjit.feedbacklist.base.BaseViewModel
 import com.faranjit.feedbacklist.ui.filter.data.Country
 import com.faranjit.feedbacklist.ui.filter.data.FilterData
 import com.faranjit.feedbacklist.ui.filter.domain.interactor.GetFilterData
 import com.faranjit.feedbacklist.ui.filter.domain.interactor.GetFilteredFeedbacks
 import com.faranjit.feedbacklist.ui.home.domain.Feedback
-import kotlinx.coroutines.launch
 
 /**
  * Created by Bulent Turkmen on 16.03.2021.
@@ -63,10 +61,9 @@ class FilterViewModel(
         getFilterData()
     }
 
-    private fun getFilterData() =
-        viewModelScope.launch {
-            filterData = getFilterData.execute()
-        }
+    private fun getFilterData() = launchDataLoad {
+        filterData = getFilterData.execute()
+    }
 
     /**
      * Rating slider change listener
@@ -75,13 +72,11 @@ class FilterViewModel(
         selectedRating = value
     }
 
-    fun filter() {
-        viewModelScope.launch {
-            feedbacks.value = filter.execute(
-                GetFilteredFeedbacks.Params(
-                    selectedRating, selectedLabel, selectedCountry, selectedCity
-                )
+    fun filter() = launchDataLoad {
+        feedbacks.value = filter.execute(
+            GetFilteredFeedbacks.Params(
+                selectedRating, selectedLabel, selectedCountry, selectedCity
             )
-        }
+        )
     }
 }
