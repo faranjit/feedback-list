@@ -16,7 +16,7 @@ jobs:
     steps:
       # Checkout the code as the first step.
       - checkout
-      
+
       - run:
           name: chmod permissions
           command: chmod +x ./gradlew
@@ -25,9 +25,9 @@ jobs:
       - android/run-tests:
           test-command: ./gradlew testDebug
 
-      # And finally run the release build
+      # And finally run the debug build
       - run:
-          name: Assemble denug build
+          name: Assemble debug build
           command: |
             ./gradlew assembleDebug    
 

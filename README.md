@@ -52,9 +52,19 @@ It lists filtered feedbacks with rating, label, country and city.
 Since I don't have a backend I created filter data, contains labels list, countries list and cities list, parsing the that dummy response.
 
 ### Detail
-It displays some informations about the selected feedback. It starts when you click a feedback listed in Home or Filter.
+It displays some information about the selected feedback. It starts when you click a feedback listed in Home or Filter.
 On top of the activity there is map fragment diplays location of the feedback. To use this map you have to create ***secret.properties*** in root folder of the application
 and define a value named **GOOGLE_MAPS_API_KEY**.
+
+## CircleCI
+CircleCI has integrated to this project. I have only one ***workflow*** named ***sample*** 
+and there is one job named ***build-and-test*** of that workflow. See [config.yml](./.circleci/config.yml).
+When the source code changes CircleCI will try to run the job. 
+There are 4 steps of that job:
+   1. checkout: Checkout the current branch
+   2. chmod permissions: Gives chmod permission to gradlew because of permission denied error
+   3. android/run-tests: Runs all tests
+   4. run: Runs the app with debug variant
 
 ## What is Next?
 Some new features can be added for example a new map fragment showing clustered feedback locations in the map. You can select one navigate through the details.
